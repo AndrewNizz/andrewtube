@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+    <h3>{{ titl }}</h3>
+    <div class="video-grid">
+        <!-- Колонка 1 -->
+        <div class="video-column">
+            {% for video in videos %}
+                <a href="/video/get/{{ video.id }}" class="video-item">
+                  <img src="{{ url_for('get_video_preview', video_id=video.id) }}" alt="ЗДЕСЬ КАРТИНКА" loading="lazy">>
+                </a>
+                <p class="video-title">{{ video.title }}</p>
+                <p>{{ video.views }} views</p>
+                <p>created at {{ video.created_date }}</p>
+              {% endfor %}
+
+        </div>
+    </div>
+
+    <style>
+      .video-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+        gap: 16px; /* Отступы между карточками */
+      }
+      .video-item {
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s;
+      }
+      .video-item:hover {
+        transform: scale(1.02);
+      }
+      .video-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+    </style>
+{% endblock %}

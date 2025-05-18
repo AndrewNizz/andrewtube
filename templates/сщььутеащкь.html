@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма комментария</title>
+    <style>
+        .comment-form {
+            max-width: 750px;
+            margin: 0 auto;
+            font-family: 'Segoe UI', Arial, Oswald;
+        }
+        .comment-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 50px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+        .comment-input:focus {
+            border-color: #4a90e2;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+        .submit-btn {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #3a7bc8;
+        }
+    </style>
+</head>
+<body>
+    <form class="comment-form">
+        <textarea class="comment-input" placeholder="Напишите ваш комментарий..." required></textarea>
+        <button type="submit" class="submit-btn">Отправить</button>
+    </form>
+</body>
+</html>

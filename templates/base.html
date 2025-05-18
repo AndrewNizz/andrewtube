@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AndrewTube</title>
+    <link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='main_styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <!-- Поисковая строка -->
+    <header class="top-bar">
+        <h2>AndrewTube</h2>
+        <div class="outer-bar">
+            <div class="search-bar">
+                <form>
+                    <input type="text" placeholder="Поиск видео..." />
+                    <button type="submit"><img src="../templates/static/lupa_icon.png" alt="поиск" width="30" height="30"></button>
+                </form>
+            </div>
+        </div>
+        <button id="themeSwitcher" class="theme-toggle">🌙</button>
+    </header>
+
+    <!-- Контейнер основного контента -->
+    <main class="page-container">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <aside class="navigation-panel">
+        <div class="profile-info">
+            <div class="profile-pic"></div>
+                {% if current_user.is_authenticated %}
+                    <a href="/" class="username">{{ current_user.name }}</a>
+                {% else %}
+                    <p>
+                        <a class="btn btn-light" href="/user/register">Sign up</a>
+                        <a class="btn btn-outline-success" href="/user/login">Log in</a>
+                    </p>
+                {% endif %}
+        </div>
+        <div>
+            <a href="/video/add">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                </svg>
+            </a>
+        </div>
+    </aside>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const themeSwitcher = document.getElementById("themeSwitcher");
+            const body = document.body;
+
+            // Проверяем сохранённую тему
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "dark") {
+                body.classList.add("dark-theme");
+                themeSwitcher.textContent = "☀️";
+            }
+
+            // Обработчик клика по переключателю
+            themeSwitcher.addEventListener("click", function () {
+                body.classList.toggle("dark-theme");
+                const newTheme = body.classList.contains("dark-theme")
+                    ? "dark"
+                    : "light";
+                localStorage.setItem("theme", newTheme);
+                themeSwitcher.textContent =
+                    newTheme === "dark" ? "☀️" : "🌙";
+            });
+
+            // Проверяем системные настройки (если нет сохранённой темы)
+            if (
+                !savedTheme &&
+                window.matchMedia &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches
+            ) {
+                body.classList.add("dark-theme");
+                themeSwitcher.textContent = "☀️";
+            }
+        });
+    </script>
+</body>
+</html>

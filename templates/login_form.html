@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon">
+</head>
+<body>
+    <button class="theme-switcher" id="themeSwitcher">🌙</button>
+    <div class="wrapper">
+        <form action="#" method="post">
+            <h2>Log in</h2>
+            <div class="input-field">
+                <input type="text" required>
+                <label for="email">Enter your email</label>
+            </div>
+            <div class="input-field">
+                <input type="password" required>
+                <label>Enter your password</label>
+            </div>
+            <div class="forget">
+            <label for="remember">
+                <input type="checkbox" name="remember_me" id="remember">
+                <p>Remember me</p>
+            </label>
+            </div>
+            <button type="submit">Log in</button>
+            <div class="register">
+                <p>Don't have an account? <a href="/user/register">Register</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            const themeSwitcher = document.getElementById('themeSwitcher');
+            const body = document.body;
+            
+            // Проверяем сохранённую тему
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-theme');
+                themeSwitcher.textContent = '☀️';
+            }
+            
+            // Обработчик клика по переключателю
+            themeSwitcher.addEventListener('click', function() {
+                body.classList.toggle('dark-theme');
+                
+                if (body.classList.contains('dark-theme')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeSwitcher.textContent = '☀️';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeSwitcher.textContent = '🌙';
+                }
+            });
+            
+            // Проверяем системные настройки (если нет сохранённой темы)
+            if (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                body.classList.add('dark-theme');
+                themeSwitcher.textContent = '☀️';
+            }
+        });
+    </script>
+</body>
+</html>
